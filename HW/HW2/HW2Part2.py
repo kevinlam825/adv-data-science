@@ -8,6 +8,8 @@
 
 # In[1]:
 
+import numpy as np
+import pandas as pd
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
@@ -16,8 +18,6 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
-import numpy as np
-import pandas as pd
 
 
 # In[2]:
@@ -45,8 +45,8 @@ def get_file_path(name_of_file):
 # In[4]:
 
 column_list = []
-for i in range(1,9): # 1-8 inclusive
-    for j in range(1,9): # 1-8 inclusive
+for i in range(1,9):
+    for j in range(1,9):
         xy = (i*10)+j
         name = 'Pixel_' + str(xy)
         column_list.append(name)
@@ -54,7 +54,6 @@ for i in range(1,9): # 1-8 inclusive
 pixel_column_list = column_list.copy() # Keep copy of just the pixel columns for easier referencing in training
 column_list.append("Digit")
 column_list.append("FileName")
-
 
 # Create dataframe based on column list
 df = pd.DataFrame(columns = [column_list])
@@ -122,7 +121,7 @@ confusion_matrix(y_test, y_predict)
 
 # ### Part E - Using GridSearchCV
 
-# In[ ]:
+# In[10]:
 
 # define a range for the "number of neurons" in the hidden layer for a network with 1 hidden layer:
 neuron_number = [(i,) for i in range(50,200)]
@@ -143,18 +142,10 @@ grid = GridSearchCV(my_ANN, param_grid, cv=10, scoring='accuracy')
 grid.fit(X, y)
 
 
-# In[ ]:
+# #### GridSearch -> Best Accuracy & Number of Neurons
 
-print(grid.best_score_)
-print(grid.best_params_)
+# In[13]:
 
-
-# In[ ]:
-
-print(5)
-
-
-# In[ ]:
-
-
+print("Best Accuracy:",grid.best_score_)
+print("Best number of neurons:",grid.best_params_['hidden_layer_sizes'][0])
 
